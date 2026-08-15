@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API = '/api';
+const API = process.env.REACT_APP_API_URL || '/api';
 const emptyEmployeeForm = { name: '', role: '', email: '' };
 const emptyProjectForm = { name: '', description: '', status: 'Planning' };
+
+const normalizeArray = (value) => (Array.isArray(value) ? value : []);
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -25,13 +27,16 @@ function App() {
         axios.get(`${API}/projects`),
         axios.get(`${API}/tasks`),
       ]);
-      console.log("Testing")
-      setEmployees(empRes.data);
-      setProjects(projRes.data);
-      setTasks(taskRes.data);
+
+      setEmployees(normalizeArray(empRes?.data));
+      setProjects(normalizeArray(projRes?.data));
+      setTasks(normalizeArray(taskRes?.data));
       setError('');
     } catch (err) {
-      setError('Backend is not reachable. Please start the backend on port 5000.');
+      setEmployees([]);
+      setProjects([]);
+      setTasks([]);
+      setError('Backend is not reachable. Set REACT_APP_API_URL to your backend URL or run the backend locally.');
     } finally {
       setLoading(false);
     }
