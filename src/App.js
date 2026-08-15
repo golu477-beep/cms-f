@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API = process.env.REACT_APP_API_URL || '/api';
+const API = 'https://cmsnew-b.vercel.app/';
 const emptyEmployeeForm = { name: '', role: '', email: '' };
 const emptyProjectForm = { name: '', description: '', status: 'Planning' };
 
@@ -23,9 +23,9 @@ function App() {
     try {
       setLoading(true);
       const [empRes, projRes, taskRes] = await Promise.all([
-        axios.get(`${API}/employees`),
-        axios.get(`${API}/projects`),
-        axios.get(`${API}/tasks`),
+        axios.get(`${API}api/employees`),
+        axios.get(`${API}api/projects`),
+        axios.get(`${API}api/tasks`),
       ]);
 
       setEmployees(normalizeArray(empRes?.data));
@@ -63,7 +63,7 @@ function App() {
     try {
       setError('');
       setSuccess('');
-      await axios.post(`${API}/employees`, employeeForm);
+      await axios.post(`${API}api/employees`, employeeForm);
       setEmployeeForm(emptyEmployeeForm);
       setSuccess('Employee added successfully');
       await fetchData();
@@ -77,7 +77,7 @@ function App() {
     try {
       setError('');
       setSuccess('');
-      await axios.post(`${API}/projects`, projectForm);
+      await axios.post(`${API}api/projects`, projectForm);
       setProjectForm(emptyProjectForm);
       setSuccess('Project added successfully');
       await fetchData();
@@ -91,7 +91,7 @@ function App() {
     try {
       setError('');
       setSuccess('');
-      await axios.post(`${API}/tasks`, taskForm);
+      await axios.post(`${API}api/tasks`, taskForm);
       setTaskForm({ title: '', description: '', status: 'Todo', projectId: '' });
       setSuccess('Task added successfully');
       await fetchData();
