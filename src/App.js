@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import EmployeeList from './components/EmployeeList';
 
 const API = 'https://cmsnew-b.vercel.app/';
 const emptyEmployeeForm = { name: '', role: '', email: '' };
